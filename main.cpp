@@ -1,44 +1,26 @@
 #include <iostream>
-#include "./include/morse.h"
-#include "./include/wave.h"
+#include "./include/decode.h"
+#include "./include/encode.h"
 #include <string>
+#include "./include/fr_to_morse.h"
+
+/* taper e pour encode, d pour décode en 1er argument puis le chemin d'entrée puis de sortie*/
 
 
-int main(int, char**) {
-    morse m;
 
-    std::string ascii_string_ori = "Hello world";
-    std::string ascii_string = ascii_string_ori;
-    std::string morse_string;
-
-    // Affichage valeur de départ.
-    std::cout << "ascii : " << ascii_string << std::endl;
-
-    // Encodage
-    morse_string = m.encode(ascii_string);
-    std::cout << "encodage morse : " << morse_string << std::endl;
-
-    // Décodage
-    ascii_string = m.decode(morse_string);
-    std::cout << "decodage morse : " << ascii_string << std::endl;
-
-    // Tests a enrichir.
-    if (ascii_string == ascii_string_ori)
-    {
-        std::cout << "peut être ok..." << std::endl;
-    }
-    else
-    {
-        std::cout << "nok" << std::endl;
-    }
+int main(int agrc, char** arg){
+    char* algo = arg[1];
     
+    char* path_entree = arg[2];
+    char* path_sortie = arg[3];
 
-    wave w;
-
-    w.test_write_binary(42);
-    std::uint32_t v = w.test_read_binary();
-
-    std::cout << v << std::endl;
-
-    
+    if (algo[0] == 'e'){
+        std::string text = get_string(path_entree);
+        encode(path_sortie, path_entree);
+    }
+    else if (algo[0] == 'd'){
+        decode(path_entree, path_sortie);
+    }
+    else {std::cout << "mauvais arguments"<< std::endl;}
+    return 1;
 }
